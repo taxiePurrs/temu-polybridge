@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+    <title>temu poly bridge</title>
+    <style>
+        body {
+            background-color: black;
+        }
+        canvas {
+            width: 100vw;
+            height: 56.25vw;
+            
+            max-height: 100vh;
+            max-width: 177.78vh;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="1920" height="1080"></canvas>
+    <script>
+        const materials = {
+            "Wood": {
+                "Tension": 5,
+                "Compression": 2,
+                "BendResistance": 3.5,
+                "SnapAngle": 5,
+                "Price": 50,
+                "MaxLenght": 5,
+                "Weight": 1
+            },
+            "Steel": {
+                "Tension": 35,
+                "Compression": 35,
+                "BendResistance": 45,
+                "SnapAngle": 25,
+                "Price": 400,
+                "MaxLenght": 10,
+                "Weight": 12
+            },
+            "Road": {
+                "Tension": 0.8,
+                "Compression": 18,
+                "BendResistance": 1.5,
+                "SnapAngle": 40,
+                "Price": 80,
+                "Weight": 35
+            }
+        }
+        var objects = [
+            {   
+                "ID": 1,
+                "Type": "Point",
+                "Fixed": true,
+                "VectorX": 10,
+                "VectorY": 10,
+                "Connections": [
+                    3
+                ]
+            },
+            {   
+                "ID": 2,
+                "Type": "Point",
+                "Fixed": false,
+                "VectorX": 15,
+                "VectorY": 10,
+                "Connections": [
+                    3
+                ]
+            },
+            {
+                "ID": 3,
+                "Type": "Material",
+                "Joint1": 1,
+                "Joint2": 2,
+                "Length": 5,
+                "Material": "Wood"
+            }
+        ];
+        function updatephysics() {
+
+        }
+
+        var lastclock = 0
+        var timetosimulate = 0
+        function render(currentclock) {
+            const frametime = currentclock - lastclock
+            
+            timetosimulate += frametime > 250 ? 250 : frametime
+
+            while (timetosimulate >= 10) {
+                timetosimulate -= 10
+                updatephysics()
+            }
+
+            lastclock = currentclock
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+    </script>
+</body>
